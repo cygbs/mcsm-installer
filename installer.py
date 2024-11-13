@@ -5,6 +5,24 @@ import requests
 import zipfile
 import shutil
 
+os.system('cls')
+print('''  __  __    ____   ____    __  __                                               
+ |  \/  |  / ___| / ___|  |  \/  |   __ _   _ __     __ _    __ _    ___   _ __ 
+ | |\/| | | |     \___ \  | |\/| |  / _` | | '_ \   / _` |  / _` |  / _ \ | '__|
+ | |  | | | |___   ___) | | |  | | | (_| | | | | | | (_| | | (_| | |  __/ | |   
+ |_|  |_|  \____| |____/  |_|  |_|  \__,_| |_| |_|  \__,_|  \__, |  \___| |_|   
+                                                            |___/               
+  ___                 _             _   _               
+ |_ _|  _ __    ___  | |_    __ _  | | | |   ___   _ __ 
+  | |  | '_ \  / __| | __|  / _` | | | | |  / _ \ | '__|
+  | |  | | | | \__ \ | |_  | (_| | | | | | |  __/ | |   
+ |___| |_| |_| |___/  \__|  \__,_| |_| |_|  \___| |_| 
+
+ + MCSM 安装器 0.1 版，
+ + 著佐权所有 © 2024 cygbs@BugCraft
+ + https://github.com/cygbs/mcsm-installer
+''')
+
 # 程序设置
 class 配置:
     URL = 'https://awwa.cc/mcsm/win'
@@ -14,9 +32,6 @@ class 配置:
     解压路径 = 运行路径 + '/mcsm'
     安装路径 = 'C:\Program Files\MCSManager'
     自启目录 = 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp'
-
-os.system('cls')
-print('MCSM Installer - v0.0\n')
 
 # 确保在 Windows 上安装
 if platform.system() == 'Windows':
