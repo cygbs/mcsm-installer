@@ -75,6 +75,16 @@ with zipfile.ZipFile(配置.文件路径, 'r') as 压缩包:
 print('整理安装文件……')
 shutil.rmtree(配置.解压路径 + '/__MACOSX')
 os.remove(配置.解压路径 + '/Github.url')
+os.remove(配置.解压路径 + '/mcsmanager/daemon/start-daemon.bat')
+os.remove(配置.解压路径 + '/mcsmanager/web/node_app.exe')
+os.rename(配置.解压路径 + '/mcsmanager/daemon/node_app.exe', 配置.解压路径 + '/node.exe')
+os.remove(配置.解压路径 + '/start.bat')
+with open(配置.解压路径 + '/start.bat', 'w') as 文件:
+    文件.write('''cd "%~dp0mcsmanager/daemon"
+start cmd /c "%~dp0node.exe" --enable-source-maps --max-old-space-size=8192 app.js 
+ping localhost
+cd "../web"
+start cmd /c "%~dp0node.exe" --enable-source-maps --max-old-space-size=8192 app.js --open''')
 
 # 安装
 if os.path.exists(配置.安装路径):
@@ -82,17 +92,15 @@ if os.path.exists(配置.安装路径):
     shutil.rmtree(配置.安装路径)
 print('复制文件……')
 os.rename(配置.解压路径, 配置.安装路径)
-print('配置启动脚本……')
-启动脚本 = 配置.用户目录 + '/Desktop/start-mcsm.cmd'
-if os.path.isfile(启动脚本): os.remove(启动脚本)
-with open(启动脚本, 'w') as 文件:
-    文件.write('cd ' + 配置.安装路径)
-    文件.write('\ncall start.bat')
 print('配置开机自启动……')
 if os.path.isfile(配置.自启目录 + '/start-mcsm.cmd'): os.remove(配置.自启目录 + '/start-mcsm.cmd')
-os.rename(启动脚本, 配置.自启目录 + '/start-mcsm.cmd')
-with open(启动脚本, 'w') as 文件:
-    文件.write('cd ' + 配置.安装路径)
+with open(配置.自启目录 + '/start-mcsm.cmd', 'w') as 文件:
+    文件.write('cd "' + 配置.安装路径 + '"')
+    文件.write('\ncall start.bat')
+print('释放桌面启动脚本……')
+if os.path.isfile(配置.用户目录 + '/Desktop/start-mcsm.cmd'): os.remove(配置.用户目录 + '/Desktop/start-mcsm.cmd')
+with open(配置.用户目录 + '/Desktop/start-mcsm.cmd', 'w') as 文件:
+    文件.write('cd "' + 配置.安装路径 + '"')
     文件.write('\ncall start.bat')
 print('安装完成！')
 
